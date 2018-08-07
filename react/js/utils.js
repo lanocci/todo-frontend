@@ -1,3 +1,4 @@
+import axios from 'axios';
 var app = app || {};
 
 (function () {
@@ -24,12 +25,20 @@ var app = app || {};
 		pluralize: function (count, word) {
 			return count === 1 ? word : word + 's';
 		},
-
+	
 		store: function (namespace, data) {
 			if (data) {
-				return localStorage.setItem(namespace, JSON.stringify(data));
+				//return localStorage.setItem(namespace, JSON.stringify(data));
+				var url = '/add_todo';
+				axios
+					.post(url)
+					.send({data: data, namespace: namespace})
+					.end(function(err, res){
+						if(err) {
+							alert(res.txt);
+						}
+					});
 			}
-
 			var store = localStorage.getItem(namespace);
 			return (store && JSON.parse(store)) || [];
 		},
