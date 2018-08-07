@@ -27,19 +27,27 @@ var app = app || {};
 		},
 	
 		store: function (namespace, data) {
+			const axiosBase = require(axios);
+			const axios = axiosBase.create({
+				baseUrl: 'http://localhost:8080',
+				headers: {
+					"Content-Type": "application/json",
+					"X-Requested-With": "XmlHttpRequest"
+				},
+				responseType: "json"
+			})
 			if (data) {
 				//return localStorage.setItem(namespace, JSON.stringify(data));
-				var url = '/add_todo';
 				axios
-					.post(url)
-					.send({data: data, namespace: namespace})
-					.end(function(err, res){
-						if(err) {
-							alert(res.txt);
+					.post('/todos', {
+						params: {
+							data: data,
+							namespace: namespace
 						}
-					});
+					}
+				)
 			}
-			var store = localStorage.getItem(namespace);
+			var store = axios.get('/todos') 
 			return (store && JSON.parse(store)) || [];
 		},
 
