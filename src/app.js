@@ -60,7 +60,7 @@ class TodoApp extends React.Component{
 			this.props.model.addTodo(val);
 			this.setState({newTodo: ''});
 		}
-	},
+	}
 
 	toggleAll(event) {
 		var checked = event.target.checked;
