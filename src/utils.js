@@ -26,7 +26,7 @@ export default class Utils extends React.Component {
 
 	store(namespace, data) {
 		const axios = axiosBase.create({
-			baseUrl: 'http://localhost:8080',
+			baseUrl: 'http://localhost:8081',
 			headers: {
 				"Content-Type": "application/json",
 				"X-Requested-With": "XmlHttpRequest"
