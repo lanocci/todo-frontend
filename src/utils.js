@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axiosBase from 'axios';
 import React from 'react';
 'use strict';
 
@@ -25,7 +25,6 @@ export default class Utils extends React.Component {
 	}
 
 	store(namespace, data) {
-		const axiosBase = require(axios);
 		const axios = axiosBase.create({
 			baseUrl: 'http://localhost:8080',
 			headers: {

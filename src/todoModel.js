@@ -15,8 +15,9 @@ import Utils from './utils';
 export default class TodoModel extends React.Component{
   constructor(key) {
 		super()
-  	this.key = key
-  	this.todos = Utils.store(key)
+		this.key = key
+		this.utils = new Utils
+  	this.todos = this.utils.store(key)
   	this.onChanges = []
   }
   
@@ -25,7 +26,7 @@ export default class TodoModel extends React.Component{
   }
   
   inform() {
-  	Utils.store(this.key, this.todos);
+  	this.utils.store(this.key, this.todos);
   	this.onChanges.forEach(function (cb) { cb(); });
   }
   
