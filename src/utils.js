@@ -36,7 +36,7 @@ export default class Utils extends React.Component {
 		if (data) {
 			//return localStorage.setItem(namespace, JSON.stringify(data));
 			axios
-				.post('/todos', {
+				.post('/', {
 					params: {
 						data: data,
 						namespace: namespace
@@ -44,7 +44,7 @@ export default class Utils extends React.Component {
 				}
 			)
 		}
-		var store = axios.get('/todos') 
+		var store = axios.get('/') 
 		return (store && JSON.parse(store)) || [];
 	}
 
