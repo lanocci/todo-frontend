@@ -44,8 +44,10 @@ export default class Utils extends React.Component {
 				}
 			)
 		}
-		var store = axios.get('/') 
-		return (store && JSON.parse(store)) || [];
+		var res
+		var store = axios.get('/').then(response => {res = JSON.parse(response)})
+		console.log(res)
+		return (res) || [];
 	}
 
 	extend() {
