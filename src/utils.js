@@ -1,4 +1,4 @@
-import axiosBase from 'axios';
+import axios from 'axios';
 import React from 'react';
 'use strict';
 
@@ -25,30 +25,48 @@ export default class Utils extends React.Component {
 	}
 
 	store(namespace, data) {
-		const axios = axiosBase.create({
-			baseUrl: 'http://localhost:8081',
-			headers: {
-				"Content-Type": "application/json",
-				"X-Requested-With": "XmlHttpRequest"
-			},
-			responseType: "json"
-		})
-		if (data) {
+//		const axios = axiosBase.create({
+//			baseUrl: 'http://localhost:8081',
+//			headers: {
+//				"Content-Type": "application/json",
+//				"X-Requested-With": "XmlHttpRequest"
+//			},
+//			responseType: "json"
+//		})
+		//if (data) {
 			//return localStorage.setItem(namespace, JSON.stringify(data));
-			axios
-				.post('/', {
-					params: {
-						data: data,
-						namespace: namespace
-					}
+		//	axios
+		//		.post('/', {
+		//			params: {
+		//				data: data,
+		//				namespace: namespace
+		//			}
+		//		}
+		//	)
+		//}
+		var todo = {}
+		var res = axios
+			.get('http://localhost:8080/todos/')
+			.then(({data})=>{
+				todo = {
+					id: data.id,
+					title: data.title,
+					completed: data.completed
 				}
-			)
-		}
-		var res
-		var store = axios.get('/').then(response => {res = JSON.parse(response)})
-		console.log(res)
-		return (res) || [];
+				return todo
+			}
+		)
 	}
+//		var res = axios
+//			.get('http://localhost:8081')
+//			.then((response) => {
+//
+//			  console.log(response.responseText)
+//			  return JSON.parse(response)}
+//		  )
+//		console.log(res)
+//		return (res) || [];
+//	}
 
 	extend() {
 		var newObj = {};

@@ -4,10 +4,8 @@
 /*jshint newcap:false */
 /*global React, Router*/
 import React from 'react';
-import ReactDOM from 'react-dom';
 import TodoFooter from './footer';
 import TodoItem from './todoItem';
-import TodoModel from './todoModel';
 'use strict';
 
 const ALL_TODOS = 'all';
@@ -16,7 +14,7 @@ const COMPLETED_TODOS = 'completed';
 
 const ENTER_KEY = 13;
 
-class TodoApp extends React.Component{
+export default class TodoApp extends React.Component{
 	constructor() {
 		super()
 		this.state = {
@@ -96,6 +94,7 @@ class TodoApp extends React.Component{
 		var footer;
 		var main;
 		var todos = this.props.model.todos;
+		console.log(todos);
 
 		var shownTodos = todos.filter(function (todo) {
 			switch (this.state.nowShowing) {
@@ -177,14 +176,4 @@ class TodoApp extends React.Component{
 			</div>
 		);
 	}
-};
-
-var model = new TodoModel('react-todos');
-
-ReactDOM.render(
-	<TodoApp model={model}/>,
-	document.getElementsByClassName('todoapp')[0]
-)
-
-model.subscribe(render);
-render();
+}

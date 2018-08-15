@@ -2,15 +2,21 @@ const webpack = require('webpack');
 const path = require('path');
 
 const config = {
-  entry: './src/app.js',
+  entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'app.js'
+    filename: 'index.js'
   },
   devServer: {
     contentBase: './dist',
     port: 8080,
-    inline: true
+    inline: true,
+    proxy: {
+      '/todos/*': {
+        target: 'http://localhost:8081',
+        secure: false
+      }
+    }
   },
   devtool: 'source-map',
   module: {
