@@ -13,11 +13,14 @@ import Utils from './utils';
 // separate out parts of your application.
     
 export default class TodoModel extends React.Component{
-  constructor(key) {
+//  constructor(key) {
+  constructor() {
+		console.log('todomodel constructor')
 		super()
-		this.key = key
+		this.key = 'a'
 		this.utils = new Utils
-  	this.todos = this.utils.store(key)
+		this.todos = this.utils.store('a')
+		console.log(this.todos)
   	this.onChanges = []
   }
   

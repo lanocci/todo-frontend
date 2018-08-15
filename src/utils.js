@@ -25,6 +25,7 @@ export default class Utils extends React.Component {
 	}
 
 	store(namespace, data) {
+		console.log('utils.store')
 //		const axios = axiosBase.create({
 //			baseUrl: 'http://localhost:8081',
 //			headers: {
@@ -45,7 +46,7 @@ export default class Utils extends React.Component {
 		//	)
 		//}
 		var todo = {}
-		var res = axios
+		return axios
 			.get('http://localhost:8080/todos/')
 			.then(({data})=>{
 				todo = {
