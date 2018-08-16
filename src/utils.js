@@ -45,18 +45,22 @@ export default class Utils extends React.Component {
 		//		}
 		//	)
 		//}
-		var res = axios
+		var res = {}
+		async function getTodo() {
+			res = await axios
 			.get('http://localhost:8080/todos/')
 			.then(response => {
-				return  response.data 
+				todo = {
+		    	id: response.id,
+		    	title: response.title,
+		    	completed: response.completed
+				}
+				console.log(response)
+				console.log(todo)
+				return todo
 			})
-		return res.then(function(data) {
-			return {
-			id: data.id,
-			title: data.title,
-			completed: data.completed
-			}
-		})
+		};
+		return res
 	}
 //		var res = axios
 //			.get('http://localhost:8081')
