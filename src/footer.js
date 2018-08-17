@@ -1,10 +1,12 @@
 import React from 'react';
+import Utils from './utils';
 
-	'use strict';
+var classNames = require('classnames');
 
 export default class TodoFooter extends React.Component{
 	render() {
-		var activeTodoWord = app.Utils.pluralize(this.props.count, 'item');
+		const utils = new Utils()
+		var activeTodoWord = utils.pluralize(this.props.count, 'item');
 		var clearButton = null;
 
 		if (this.props.completedCount > 0) {

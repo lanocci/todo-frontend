@@ -1,10 +1,14 @@
 import React from 'react';
-'use strict';
 
+var classNames = require('classnames');
 var ESCAPE_KEY = 27;
 var ENTER_KEY = 13;
 
 export default class TodoItem extends React.Component{
+	constructor() {
+		super()
+		this.state.editText = ""
+	}
 	handleSubmit(event) {
 		var val = this.state.editText.trim();
 		if (val) {

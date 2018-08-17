@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React from 'react';
-'use strict';
 
 export default class Utils extends React.Component {
 	uuid() {
@@ -58,6 +57,9 @@ export default class Utils extends React.Component {
 				console.log(response)
 				console.log(todo)
 				return todo
+			})
+			.catch(() => {
+				console.log('failed to communicate api server')
 			})
 		};
 		return res

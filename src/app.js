@@ -6,7 +6,6 @@
 import React from 'react';
 import TodoFooter from './footer';
 import TodoItem from './todoItem';
-'use strict';
 
 const ALL_TODOS = 'all';
 const ACTIVE_TODOS = 'active';
@@ -93,8 +92,10 @@ export default class TodoApp extends React.Component{
 	render() {
 		var footer;
 		var main;
-		var todos = this.props.model.todos;
+		//var todos = this.props.model.todos;
+		var todos = [{id: 1, title: 'aa', completed: false}, {id: 2, titile: 'bb', completed: true}]
 		console.log(todos);
+		console.log(todos.prototype)
 
 		var shownTodos = todos.filter(function (todo) {
 			switch (this.state.nowShowing) {

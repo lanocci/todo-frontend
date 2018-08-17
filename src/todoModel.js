@@ -2,7 +2,6 @@
 /*jshint white:false */
 /*jshint trailing:false */
 /*jshint newcap:false */
-'use strict';
 
 import React from 'react';
 import Utils from './utils';
