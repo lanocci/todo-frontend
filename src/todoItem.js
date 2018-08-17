@@ -7,7 +7,9 @@ var ENTER_KEY = 13;
 export default class TodoItem extends React.Component{
 	constructor() {
 		super()
-		this.state.editText = ""
+		this.state = {
+			editText: ""
+		}
 	}
 	handleSubmit(event) {
 		var val = this.state.editText.trim();

@@ -2,6 +2,9 @@ import React from 'react';
 import Utils from './utils';
 
 var classNames = require('classnames');
+const ALL_TODOS = 'all';
+const ACTIVE_TODOS = 'active';
+const COMPLETED_TODOS = 'completed';
 
 export default class TodoFooter extends React.Component{
 	render() {
@@ -29,7 +32,7 @@ export default class TodoFooter extends React.Component{
 					<li>
 						<a
 							href="#/"
-							className={classNames({selected: nowShowing === app.ALL_TODOS})}>
+							className={classNames({selected: nowShowing === ALL_TODOS})}>
 								All
 						</a>
 					</li>
@@ -37,7 +40,7 @@ export default class TodoFooter extends React.Component{
 					<li>
 						<a
 							href="#/active"
-							className={classNames({selected: nowShowing === app.ACTIVE_TODOS})}>
+							className={classNames({selected: nowShowing === ACTIVE_TODOS})}>
 								Active
 						</a>
 					</li>
@@ -45,7 +48,7 @@ export default class TodoFooter extends React.Component{
 					<li>
 						<a
 							href="#/completed"
-							className={classNames({selected: nowShowing === app.COMPLETED_TODOS})}>
+							className={classNames({selected: nowShowing === COMPLETED_TODOS})}>
 								Completed
 						</a>
 					</li>

@@ -7,11 +7,10 @@ import React from 'react';
 import TodoFooter from './footer';
 import TodoItem from './todoItem';
 
+const ENTER_KEY = 13;
 const ALL_TODOS = 'all';
 const ACTIVE_TODOS = 'active';
 const COMPLETED_TODOS = 'completed';
-
-const ENTER_KEY = 13;
 
 export default class TodoApp extends React.Component{
 	constructor() {
@@ -95,7 +94,6 @@ export default class TodoApp extends React.Component{
 		//var todos = this.props.model.todos;
 		var todos = [{id: 1, title: 'aa', completed: false}, {id: 2, titile: 'bb', completed: true}]
 		console.log(todos);
-		console.log(todos.prototype)
 
 		var shownTodos = todos.filter(function (todo) {
 			switch (this.state.nowShowing) {
