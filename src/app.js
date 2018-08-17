@@ -31,6 +31,7 @@ export default class TodoApp extends React.Component{
 
 	componentDidMount() {
 		var setState = this.setState;
+		//ここでエラーが出る。directorをインポートできたら勝ちっぽい
 		var router = Router({
 			'/': setState.bind(this, {nowShowing: ALL_TODOS}),
 			'/active': setState.bind(this, {nowShowing: ACTIVE_TODOS}),
