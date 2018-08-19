@@ -1,7 +1,6 @@
 import axios from 'axios';
-import React from 'react';
 
-export default class Utils extends React.Component {
+export default class Utils {
 	uuid() {
 		/*jshint bitwise:false */
 		var i, random;
@@ -44,25 +43,22 @@ export default class Utils extends React.Component {
 		//		}
 		//	)
 		//}
-		var res = {}
-		async function getTodo() {
-			res = await axios
-			.get('http://localhost:8080/todos/')
-			.then(response => {
-				todo = {
-		    	id: response.id,
-		    	title: response.title,
-		    	completed: response.completed
-				}
-				console.log(response)
-				console.log(todo)
-				return todo
-			})
-			.catch(() => {
-				console.log('failed to communicate api server')
-			})
-		};
-		return res
+		const caller = axios.create({
+			baseURL: 'http://localhost:8080',
+			headers: {
+				'ContentType': 'application/json',
+				'X-Requested-With': 'XMLHttpRequest'
+			},
+			responseType: 'json'
+		})
+		function getTodo() {
+			return caller
+			  .get('/todos/')
+			  .catch(() => {
+			  	console.log('failed to communicate api server')
+			  })
+		}
+		return getTodo().then((res) => (res))
 	}
 //		var res = axios
 //			.get('http://localhost:8081')
@@ -70,8 +66,7 @@ export default class Utils extends React.Component {
 //
 //			  console.log(response.responseText)
 //			  return JSON.parse(response)}
-//		  )
-//		console.log(res)
+//		  ) //		console.log(res)
 //		return (res) || [];
 //	}
 

@@ -11,11 +11,10 @@ import Utils from './utils';
 // out, but we do this to demonstrate one way to
 // separate out parts of your application.
     
-export default class TodoModel extends React.Component{
+export default class TodoModel{
 //  constructor(key) {
   constructor() {
 		console.log('todomodel constructor')
-		super()
 		this.key = 'a'
 		this.utils = new Utils
 		this.todos = this.utils.store('a')
