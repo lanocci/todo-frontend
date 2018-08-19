@@ -1,9 +1,5 @@
-/*jshint quotmark:false */
-/*jshint white:false */
-/*jshint trailing:false */
-/*jshint newcap:false */
-/*global React, Router*/
 import React from 'react';
+// import Router from 'director';
 import TodoFooter from './footer';
 import TodoItem from './todoItem';
 
@@ -31,12 +27,12 @@ export default class TodoApp extends React.Component{
 
 	componentDidMount() {
 		var setState = this.setState;
-		var router = Router({
+		/*var router = Router({
 			'/': setState.bind(this, {nowShowing: ALL_TODOS}),
 			'/active': setState.bind(this, {nowShowing: ACTIVE_TODOS}),
 			'/completed': setState.bind(this, {nowShowing: COMPLETED_TODOS})
 		});
-		router.init('/');
+		router.init('/'); */
 	}
 
 	handleChange(event) {
