@@ -9,13 +9,11 @@ const config = {
   },
   devServer: {
     contentBase: './dist',
+    host: 'localhost',
     port: 8080,
     inline: true,
     proxy: {
-      '/todos/*': {
-        target: 'http://localhost:8081',
-        secure: false
-      }
+      '/todos/*': 'http://localhost:8081'
     }
   },
   devtool: 'source-map',

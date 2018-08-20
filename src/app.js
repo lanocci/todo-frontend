@@ -1,11 +1,9 @@
-/*jshint quotmark:false */
-/*jshint white:false */
-/*jshint trailing:false */
-/*jshint newcap:false */
-/*global React, Router*/
 import React from 'react';
+// import Router from 'director';
 import TodoFooter from './footer';
 import TodoItem from './todoItem';
+import TodoModel from './todoModel'
+import Utils from './utils';
 
 const ENTER_KEY = 13;
 const ALL_TODOS = 'all';
@@ -14,11 +12,13 @@ const COMPLETED_TODOS = 'completed';
 
 export default class TodoApp extends React.Component{
 	constructor() {
+		console.log('initializing app.js')
 		super()
 		this.state = {
 			nowShowing: ALL_TODOS,
 			editing: null,
-			newTodo: ''
+			newTodo: '',
+			todos: new TodoModel
 		}
 	}
 	getInitialState() {
@@ -32,12 +32,13 @@ export default class TodoApp extends React.Component{
 	componentDidMount() {
 		var setState = this.setState;
 		//ここでエラーが出る。directorをインポートできたら勝ちっぽい
-		var router = Router({
+		/*var router = Router({
 			'/': setState.bind(this, {nowShowing: ALL_TODOS}),
 			'/active': setState.bind(this, {nowShowing: ACTIVE_TODOS}),
 			'/completed': setState.bind(this, {nowShowing: COMPLETED_TODOS})
 		});
-		router.init('/');
+		router.init('/'); */
+		
 	}
 
 	handleChange(event) {
@@ -92,11 +93,13 @@ export default class TodoApp extends React.Component{
 	render() {
 		var footer;
 		var main;
-		//var todos = this.props.model.todos;
-		var todos = [{id: 1, title: 'aa', completed: false}, {id: 2, titile: 'bb', completed: true}]
-		console.log(todos);
 
-		var shownTodos = todos.filter(function (todo) {
+		// TODO: todosの持ってきかた考える
+		var utils = new Utils
+		console.log(this.state.todos.todos);
+
+		// 見せるtodoの制御
+		/* var shownTodos = todos.filter(function (todo) {
 			switch (this.state.nowShowing) {
 			case ACTIVE_TODOS:
 				return !todo.completed;
@@ -105,9 +108,10 @@ export default class TodoApp extends React.Component{
 			default:
 				return true;
 			}
-		}, this);
+		}, this); */
 
-		var todoItems = shownTodos.map(function (todo) {
+		// var todoItems = shownTodos.map(function (todo) {
+		var todoItems = this.state.todos.todos.map(function (todo) {
 			return (
 				<TodoItem
 					key={todo.id}
