@@ -51,14 +51,29 @@ export default class Utils {
 			},
 			responseType: 'json'
 		})
-		function getTodo() {
-			return caller
-			  .get('/todos/')
-			  .catch(() => {
-			  	console.log('failed to communicate api server')
-			  })
+		async function getTodo() {
+			try {
+				return (await caller.get('/todos/')).data
+			} catch(error) {
+				throw error.response.status
+			}
 		}
-		return getTodo().then((res) => (res))
+			//return caller
+			  //.get('/todos/')
+			  //.catch(() => {
+			  	//console.log('failed to communicate api server')
+			  //})
+		//}
+		getTodo().then((res) => {
+			var todo = {
+		  	id: res.id,
+			  title: res.title,
+			  completed: res.completed
+			}
+			console.log(todo)
+			return todo
+		})
+		.catch(error => console.error(error))
 	}
 //		var res = axios
 //			.get('http://localhost:8081')

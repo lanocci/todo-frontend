@@ -1,5 +1,6 @@
 import React from 'react';
 // import Router from 'director';
+import axios from'axios';
 import TodoFooter from './footer';
 import TodoItem from './todoItem';
 import TodoModel from './todoModel'
@@ -18,7 +19,7 @@ export default class TodoApp extends React.Component{
 			nowShowing: ALL_TODOS,
 			editing: null,
 			newTodo: '',
-			todos: new TodoModel
+			todos: {}
 		}
 	}
 	getInitialState() {
@@ -30,7 +31,39 @@ export default class TodoApp extends React.Component{
 	}
 
 	componentDidMount() {
-		var setState = this.setState;
+		const caller = axios.create({
+			baseURL: 'http://localhost:8080',
+			headers: {
+				'ContentType': 'application/json',
+				'X-Requested-With': 'XMLHttpRequest'
+			},
+			responseType: 'json'
+		})
+		async function getTodo() {
+			try {
+				return (await caller.get('/todos/')).data
+			} catch(error) {
+				throw error.response.status
+			}
+		}
+			//return caller
+			  //.get('/todos/')
+			  //.catch(() => {
+			  	//console.log('failed to communicate api server')
+			  //})
+		//}
+		var tdi = getTodo().then((res) => {
+			var todo = {
+		  	id: res.id,
+			  title: res.title,
+			  completed: res.completed
+			}
+			return todo
+		})
+		.catch(error => console.error(error))
+
+		this.setState({todos: tdi})
+		console.log(this.state.todo)
 		//ここでエラーが出る。directorをインポートできたら勝ちっぽい
 		/*var router = Router({
 			'/': setState.bind(this, {nowShowing: ALL_TODOS}),
@@ -96,7 +129,7 @@ export default class TodoApp extends React.Component{
 
 		// TODO: todosの持ってきかた考える
 		var utils = new Utils
-		console.log(this.state.todos.todos);
+		console.log(this.state.todos);
 
 		// 見せるtodoの制御
 		/* var shownTodos = todos.filter(function (todo) {
@@ -111,8 +144,9 @@ export default class TodoApp extends React.Component{
 		}, this); */
 
 		// var todoItems = shownTodos.map(function (todo) {
-		var todoItems = this.state.todos.todos.map(function (todo) {
-			return (
+		// var todoItems = this.state.todos.map(function (todo) {
+		var todo = this.state.todos
+		var todoItems =
 				<TodoItem
 					key={todo.id}
 					todo={todo}
@@ -123,14 +157,14 @@ export default class TodoApp extends React.Component{
 					onSave={this.save.bind(this, todo)}
 					onCancel={this.cancel}
 				/>
-			);
-		}, this);
 
-		var activeTodoCount = todos.reduce(function (accum, todo) {
-			return todo.completed ? accum : accum + 1;
-		}, 0);
+		var activeTodoCount = 1
+//		var activeTodoCount = todos.reduce(function (accum, todo) {
+//			return todo.completed ? accum : accum + 1;
+//		}, 0);
 
-		var completedCount = todos.length - activeTodoCount;
+		//var completedCount = todos.length - activeTodoCount;
+		var completedCount = 0
 
 		if (activeTodoCount || completedCount) {
 			footer =
@@ -142,7 +176,8 @@ export default class TodoApp extends React.Component{
 				/>;
 		}
 
-		if (todos.length) {
+		//if (todos.length) {
+		if (true) {
 			main = (
 				<section className="main">
 					<input
