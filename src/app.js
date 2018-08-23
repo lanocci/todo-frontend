@@ -39,31 +39,26 @@ export default class TodoApp extends React.Component{
 			},
 			responseType: 'json'
 		})
-		async function getTodo() {
-			try {
-				return (await caller.get('/todos/')).data
-			} catch(error) {
-				throw error.response.status
-			}
+		function initializeTodo() {
+			caller.get('/todos/').then((res) => {
+			  var todo = {
+		    	id: res.data.id,
+			    title: res.data.title,
+			    completed: res.data.completed
+				}
+				this.setState({todos: todo})
+				console.log(this.state.todos)
+			})
+			.catch(error => console.error(error))
 		}
+		initializeTodo()
 			//return caller
 			  //.get('/todos/')
 			  //.catch(() => {
 			  	//console.log('failed to communicate api server')
 			  //})
 		//}
-		var tdi = getTodo().then((res) => {
-			var todo = {
-		  	id: res.id,
-			  title: res.title,
-			  completed: res.completed
-			}
-			return todo
-		})
-		.catch(error => console.error(error))
 
-		this.setState({todos: tdi})
-		console.log(this.state.todo)
 		//ここでエラーが出る。directorをインポートできたら勝ちっぽい
 		/*var router = Router({
 			'/': setState.bind(this, {nowShowing: ALL_TODOS}),
