@@ -46,9 +46,10 @@ export default class TodoApp extends React.Component{
 			    title: res.data.title,
 			    completed: res.data.completed
 				}
-				this.setState({todos: todo})
-				console.log(this.state.todos)
-			})
+				return todo
+			}
+			)
+			.then((todo) => setState({todos: todo}))
 			.catch(error => console.error(error))
 		}
 		initializeTodo()
