@@ -39,20 +39,20 @@ export default class TodoApp extends React.Component{
 			},
 			responseType: 'json'
 		})
-		function initializeTodo() {
-			caller.get('/todos/').then((res) => {
-			  var todo = {
-		    	id: res.data.id,
-			    title: res.data.title,
-			    completed: res.data.completed
-				}
-				return todo
-			}
-			)
-			.then((todo) => setState({todos: todo}))
-			.catch(error => console.error(error))
-		}
-		initializeTodo()
+//		function initializeTodo() {
+		caller
+		  .get('/todos/')
+		  .then((res) => {
+		    const todo = {
+	      	id: res.data.id,
+		      title: res.data.title,
+		      completed: res.data.completed
+		  	}
+         this.setState({todos: todo})
+		  })
+ 			.catch(error => console.error(error))
+//		}
+//		initializeTodo()
 			//return caller
 			  //.get('/todos/')
 			  //.catch(() => {
