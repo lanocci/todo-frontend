@@ -19,8 +19,12 @@ export default class TodoApp extends React.Component{
 			nowShowing: ALL_TODOS,
 			editing: null,
 			newTodo: '',
-			todos: {}
+			todos: [] 
 		}
+		this.toggle = this.toggle.bind(this)
+		this.destroy = this.destroy.bind(this)
+		this.edit = this.edit.bind(this)
+		this.cancel = this.cancel.bind(this)
 	}
 	getInitialState() {
 		return {
@@ -39,35 +43,30 @@ export default class TodoApp extends React.Component{
 			},
 			responseType: 'json'
 		})
-//		function initializeTodo() {
+		var todos = []
 		caller
 		  .get('/todos/')
 		  .then((res) => {
-		    const todo = {
-	      	id: res.data.id,
-		      title: res.data.title,
-		      completed: res.data.completed
-		  	}
-         this.setState({todos: todo})
+				for(let t of res.data){
+		      var todo = {
+	      	  id: t.id,
+  		      title: t.title,
+		        completed: t.completed
+					}
+					todos.push(todo)
+				}
+        this.setState({todos: todos})
 		  })
  			.catch(error => console.error(error))
-//		}
-//		initializeTodo()
-			//return caller
-			  //.get('/todos/')
-			  //.catch(() => {
-			  	//console.log('failed to communicate api server')
-			  //})
-		//}
 
 		//ここでエラーが出る。directorをインポートできたら勝ちっぽい
+		// これfinagleでやれば良い
 		/*var router = Router({
 			'/': setState.bind(this, {nowShowing: ALL_TODOS}),
 			'/active': setState.bind(this, {nowShowing: ACTIVE_TODOS}),
 			'/completed': setState.bind(this, {nowShowing: COMPLETED_TODOS})
 		});
 		router.init('/'); */
-		
 	}
 
 	handleChange(event) {
@@ -140,24 +139,24 @@ export default class TodoApp extends React.Component{
 		}, this); */
 
 		// var todoItems = shownTodos.map(function (todo) {
-		// var todoItems = this.state.todos.map(function (todo) {
-		var todo = this.state.todos
-		var todoItems =
+		var todoItems = this.state.todos.map(function (todo) {
 				<TodoItem
 					key={todo.id}
 					todo={todo}
-					onToggle={this.toggle.bind(this, todo)}
-					onDestroy={this.destroy.bind(this, todo)}
-					onEdit={this.edit.bind(this, todo)}
+					onToggle={this.toggle}
+					onDestroy={this.destroy}
+					onEdit={this.edit}
 					editing={this.state.editing === todo.id}
 					onSave={this.save.bind(this, todo)}
 					onCancel={this.cancel}
 				/>
+		})
+		console.log(todoItems)
 
-		var activeTodoCount = 1
-//		var activeTodoCount = todos.reduce(function (accum, todo) {
-//			return todo.completed ? accum : accum + 1;
-//		}, 0);
+//		var activeTodoCount = 1
+		var activeTodoCount = todoItems.reduce(function (accum, todo) {
+			return todo.completed ? accum : accum + 1;
+		}, 0);
 
 		//var completedCount = todos.length - activeTodoCount;
 		var completedCount = 0
