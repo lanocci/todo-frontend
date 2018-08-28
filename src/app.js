@@ -3,7 +3,7 @@ import React from 'react';
 import axios from'axios';
 import TodoFooter from './footer';
 import TodoItem from './todoItem';
-import TodoModel from './todoModel'
+import TodoModel from './todoModel';
 import Utils from './utils';
 
 const ENTER_KEY = 13;
@@ -22,6 +22,7 @@ export default class TodoApp extends React.Component{
 			todos: [] 
 		}
 		this.toggle = this.toggle.bind(this)
+		this.save = this.save.bind(this)
 		this.destroy = this.destroy.bind(this)
 		this.edit = this.edit.bind(this)
 		this.cancel = this.cancel.bind(this)
@@ -121,10 +122,16 @@ export default class TodoApp extends React.Component{
 	render() {
 		var footer;
 		var main;
+		var todos = this.state.todos
+		var toggle = this.state.toggle
+		var destroy = this.state.destroy
+		var edit = this.state.edit
+		var cancel = this.state.cancel
+		var save = this.state.save
 
 		// TODO: todosの持ってきかた考える
 		var utils = new Utils
-		console.log(this.state.todos);
+		console.log(todos);
 
 		// 見せるtodoの制御
 		/* var shownTodos = todos.filter(function (todo) {
@@ -139,27 +146,32 @@ export default class TodoApp extends React.Component{
 		}, this); */
 
 		// var todoItems = shownTodos.map(function (todo) {
-		var todoItems = this.state.todos.map(function (todo) {
-				<TodoItem
-					key={todo.id}
-					todo={todo}
-					onToggle={this.toggle}
-					onDestroy={this.destroy}
-					onEdit={this.edit}
-					editing={this.state.editing === todo.id}
-					onSave={this.save.bind(this, todo)}
-					onCancel={this.cancel}
-				/>
+		var todoItems = todos.map(function (todo) {
+			return(
+			  <TodoItem
+			  	key={todo.id}
+			  	todo={todo}
+			  	onToggle={toggle}
+			  	onDestroy={destroy}
+			  	onEdit={edit}
+			  	editing={edit === todo.id}
+			  	onSave={save}
+			  	onCancel={cancel}
+			  />
+			)
 		})
-		console.log(todoItems)
 
 //		var activeTodoCount = 1
 		var activeTodoCount = todoItems.reduce(function (accum, todo) {
-			return todo.completed ? accum : accum + 1;
+			if(todo) {
+				return todo.completed ? accum : accum + 1;
+			} else {
+				return 
+			}
 		}, 0);
 
-		//var completedCount = todos.length - activeTodoCount;
-		var completedCount = 0
+		var completedCount = todos.length - activeTodoCount;
+		// var completedCount = 0
 
 		if (activeTodoCount || completedCount) {
 			footer =
@@ -171,8 +183,8 @@ export default class TodoApp extends React.Component{
 				/>;
 		}
 
-		//if (todos.length) {
-		if (true) {
+		if (this.state.todos.length) {
+		//if (true) {
 			main = (
 				<section className="main">
 					<input
