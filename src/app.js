@@ -26,6 +26,8 @@ export default class TodoApp extends React.Component{
 		this.destroy = this.destroy.bind(this)
 		this.edit = this.edit.bind(this)
 		this.cancel = this.cancel.bind(this)
+		this.handleChange = this.handleChange.bind(this)
+		this.handleNewTodoKeyDown = this.handleNewTodoKeyDown.bind(this)
 	}
 	getInitialState() {
 		return {
