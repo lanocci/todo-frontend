@@ -3,7 +3,6 @@
 /*jshint trailing:false */
 /*jshint newcap:false */
 
-import React from 'react';
 import Utils from './utils';
 // Generic "model" object. You can use whatever
 // framework you want. For this application it
