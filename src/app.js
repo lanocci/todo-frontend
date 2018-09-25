@@ -10,6 +10,14 @@ const ENTER_KEY = 13;
 const ALL_TODOS = 'all';
 const ACTIVE_TODOS = 'active';
 const COMPLETED_TODOS = 'completed';
+const caller = axios.create({
+	baseURL: 'http://localhost:8080',
+	headers: {
+		'ContentType': 'application/json',
+		'X-Requested-With': 'XMLHttpRequest'
+	},
+	responseType: 'json'
+})
 
 export default class TodoApp extends React.Component{
 	constructor() {
@@ -39,14 +47,6 @@ export default class TodoApp extends React.Component{
 	}
 
 	componentDidMount() {
-		const caller = axios.create({
-			baseURL: 'http://localhost:8080',
-			headers: {
-				'ContentType': 'application/json',
-				'X-Requested-With': 'XMLHttpRequest'
-			},
-			responseType: 'json'
-		})
 		var todos = []
 		caller
 		  .get('/todos/')
@@ -121,23 +121,27 @@ export default class TodoApp extends React.Component{
   //		title: title,
   //		completed: false
 	//  })
-		const caller = axios.create({
-			baseURL: 'http://localhost:8080',
-			headers: {
-				'ContentType': 'application/json',
-				'X-Requested-With': 'XMLHttpRequest'
-			},
-			responseType: 'json'
-		})
 		var data = ({
 			id: 999,
 			title: title, 
 			completed: false,
 			user_id: 1
 		})
+		var todos = []
 		caller
 		  .post('/todos/', data)
- 			.catch(error => console.error(error))
+		  .then((res) => {
+				for(let t of res.data){
+		      var todo = {
+	      	  id: t.id,
+  		      title: t.title,
+		        completed: t.completed
+					}
+					todos.push(todo)
+				}
+        this.setState({todos: todos})
+		  })
+			.catch(error => console.error(error))
 	}
 
 	cancel() {
