@@ -33,15 +33,7 @@ export default class Utils {
 //			responseType: "json"
 //		})
 		//if (data) {
-			//return localStorage.setItem(namespace, JSON.stringify(data));
-		//	axios
-		//		.post('/', {
-		//			params: {
-		//				data: data,
-		//				namespace: namespace
-		//			}
-		//		}
-		//	)
+  	//  return localStorage.setItem(namespace, JSON.stringify(data));
 		//}
 		const caller = axios.create({
 			baseURL: 'http://localhost:8080',
@@ -51,6 +43,14 @@ export default class Utils {
 			},
 			responseType: 'json'
 		})
+
+		function storeTodo(data) {
+			try {
+				return (caller.post('/todos/', data))
+			} catch(error) {
+				throw error.response.status
+			}
+		}
 		async function getTodo() {
 			try {
 				return (await caller.get('/todos/')).data
@@ -64,6 +64,7 @@ export default class Utils {
 			  	//console.log('failed to communicate api server')
 			  //})
 		//}
+		storeTodo(data)
 		getTodo().then((res) => {
 			var todo = {
 		  	id: res.id,

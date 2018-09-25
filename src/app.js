@@ -22,6 +22,7 @@ export default class TodoApp extends React.Component{
 			todos: [] 
 		}
 		this.toggle = this.toggle.bind(this)
+		this.addTodo = this.addTodo.bind(this)
 		this.save = this.save.bind(this)
 		this.destroy = this.destroy.bind(this)
 		this.edit = this.edit.bind(this)
@@ -86,7 +87,7 @@ export default class TodoApp extends React.Component{
 		var val = this.state.newTodo.trim();
 
 		if (val) {
-			this.props.model.addTodo(val);
+			this.addTodo(val);
 			this.setState({newTodo: ''});
 		}
 	}
@@ -111,6 +112,32 @@ export default class TodoApp extends React.Component{
 	save(todoToSave, text) {
 		this.props.model.save(todoToSave, text);
 		this.setState({editing: null});
+	}
+
+  addTodo(title) {
+		var utils = new Utils
+  //	this.todos = this.state.todos.concat({
+  //		id: utils.uuid(),
+  //		title: title,
+  //		completed: false
+	//  })
+		const caller = axios.create({
+			baseURL: 'http://localhost:8080',
+			headers: {
+				'ContentType': 'application/json',
+				'X-Requested-With': 'XMLHttpRequest'
+			},
+			responseType: 'json'
+		})
+		var data = ({
+			id: 999,
+			title: title, 
+			completed: false,
+			user_id: 1
+		})
+		caller
+		  .post('/todos/', data)
+ 			.catch(error => console.error(error))
 	}
 
 	cancel() {
